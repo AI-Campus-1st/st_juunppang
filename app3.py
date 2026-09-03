@@ -21,24 +21,29 @@ DB_CONFIG = {
     'database': os.getenv('DB_NAME', ''),
 }
 
+if not DB_CONFIG['password']:
+    st.write('DB 접속정보가 설정되지 않았습니다.')
+
 initlize()
+try:
+    conn = connect(DB_CONFIG)
 
-conn = connect(DB_CONFIG)
+    orders = select_order(conn)
+    df = pd.DataFrame(orders)
 
-orders = select_order(conn)
-df = pd.DataFrame(orders)
+    conn.close()
+    st.dataframe(df)
 
-conn.close()
-st.dataframe(df)
+    page = sidebar.render()
 
-page = sidebar.render()
+    print(st.session_state['page'])
 
-print(st.session_state['page'])
+    if st.session_state['page'] == 0:
+        home.page()
+    if st.session_state['page'] == 1:
+        st.write('다른 페이지')
 
-if st.session_state['page'] == 0:
-    home.page()
-if st.session_state['page'] == 1:
-    st.write('다른 페이지')
-
-    for i in range(10):
-        item.Item()
+        for i in range(10):
+            item.Item()
+except:
+    st.write('데이터베이스 연결 실패')
