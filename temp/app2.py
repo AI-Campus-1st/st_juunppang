@@ -46,3 +46,4 @@ def load_data():
 
 data = load_data()
 st.dataframe(data)
+
