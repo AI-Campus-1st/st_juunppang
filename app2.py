@@ -16,7 +16,7 @@ users_table = Table('users', metadata,
                     Column('address', String))
 
 # DB에 테이블 생성
-metadata.create_all(engine)
+metadata.create_all(engine, checkfirst=True)
 
 
 fake = Faker()
