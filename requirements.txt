@@ -8,3 +8,4 @@ sqlalchemy
 faker
 pymysql
 python-dotenv
+streamlit-autorefresh
